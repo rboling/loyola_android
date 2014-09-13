@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LoyaltyClub</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="prompt_to_enter_credits_purchased">Please enter the amount of credits purchased</string>
+    <string name="credits_purchased_by_user">Enter amount of credits purchased</string>
+    <string name="submit_credits_purchased_by_user">Enter Credits Bought</string>
+    <string name="title_activity_using_credits">UsingCredits</string>
+    <string name="prompt_to_enter_phone_number">Please enter the user\'s phone number</string>
+    <string name="prompt_to_enter_credits_used">Please enter the amount of credits used</string>
+    <string name="using_credits_prompt_text">Please enter the user\'s phone number and the credits used</string>
+    <string name="using_credits_button_text">Submit the customer\'s phone number and credits used</string>
+    <string name="title_activity_launch">LaunchActivity</string>
+    <string name="choose_process_option_prompt">Enter credits purchased or credits to be used</string>
+    <string name="enter_credits_used">Process Credits Used</string>
+    <string name="enter_credits_bought">Process Credits Bought</string>
+
+</resources>

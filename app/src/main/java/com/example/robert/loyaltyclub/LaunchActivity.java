@@ -1,9 +1,12 @@
 package com.example.robert.loyaltyclub;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class LaunchActivity extends Activity {
@@ -12,8 +15,23 @@ public class LaunchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
+        Button enterCreditsUsed = (Button) findViewById(R.id.enter_credits_used_id);
+        Button enterCreditsBought = (Button) findViewById(R.id.enter_credits_bought_id);
+        final Intent launchCustomerDataEntry = new Intent(this, CustomerDataEntry.class);
+        final Intent launchUsingCredits = new Intent(this, UsingCredits.class);
+        enterCreditsUsed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(launchUsingCredits);
+            }
+        });
+        enterCreditsBought.setOnClickListener(new View.OnClickListener(){
+            @Override
+        public void onClick(View view){
+                startActivity(launchCustomerDataEntry);
+            }
+        });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

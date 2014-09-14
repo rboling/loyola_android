@@ -14,7 +14,7 @@
     <string name="using_credits_button_text">Submit the customer\'s phone number and credits used</string>
     <string name="title_activity_launch">LaunchActivity</string>
     <string name="choose_process_option_prompt">Enter credits purchased or credits to be used</string>
-    <string name="enter_credits_used">Process Credits Used</string>
-    <string name="enter_credits_bought">Process Credits Bought</string>
+    <string name="enter_credits_used">Enter Credits Used</string>
+    <string name="enter_credits_bought">Enter Credits Bought</string>
 
 </resources>

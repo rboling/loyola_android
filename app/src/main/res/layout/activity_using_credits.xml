@@ -24,6 +24,11 @@
         android:layout_height="wrap_content"
         android:hint="@string/prompt_to_enter_credits_used"/>
     <Button
+        android:id="@+id/check_balance_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_balance_button_text"/>
+    <Button
         android:id="@+id/using_credits_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

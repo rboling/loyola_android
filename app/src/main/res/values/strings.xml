@@ -16,5 +16,7 @@
     <string name="choose_process_option_prompt">Enter credits purchased or credits to be used</string>
     <string name="enter_credits_used">Enter Credits Used</string>
     <string name="enter_credits_bought">Enter Credits Bought</string>
+    <string name="check_balance_button_text">Check user balance</string>
+    <string name="credits_purchased_phone_number_text">Enter the user\'s phone number</string>
 
 </resources>

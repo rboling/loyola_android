@@ -19,6 +19,11 @@
         android:hint="@string/credits_purchased_by_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/credits_purchased_phone_number"
+        android:hint="@string/credits_purchased_phone_number_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/button_to_submit_credits_purchased"
         android:text="@string/submit_credits_purchased_by_user"

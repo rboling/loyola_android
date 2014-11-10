@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.robert.loyaltyclub.TaskerInputs.CheckBalanceTaskerInput;
+import com.example.robert.loyaltyclub.TaskerInputs.UpdateCreditTaskerInput;
+import com.example.robert.loyaltyclub.Taskers.CheckBalanceTasker;
+import com.example.robert.loyaltyclub.Taskers.UpdateCreditTasker;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -50,10 +55,8 @@ public class UsingCredits extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //phoneNumber = (EditText) findViewById(R.id.enter_phone_number_id);
-        //creditsUsed = (EditText) findViewById(R.id.enter_the_amount_of_credits_used);
-        //creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
-        //checkBalance = (Button)findViewById(R.id.check_balance_button);
+        final int merchantId = 1;
+        final UsingCredits usingCredits = this;
         setContentView(R.layout.activity_using_credits);
         phoneNumber = (EditText) findViewById(R.id.enter_phone_number_id);
         creditsUsed = (EditText) findViewById(R.id.enter_the_amount_of_credits_used);
@@ -64,31 +67,17 @@ public class UsingCredits extends Activity {
             @Override
             public void onClick(View view){
                 creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
-                if (creditsUsedPromptText == null) {
-                    Log.d("CREDITSUSEDPROMPTTEXT", "it is null");
-                }
-                else{
-                    Log.d("CREDITSUSEDPROMPTTEXT", "it is not null");
-                }
-                //creditsUsedPromptText.setText("foo");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new RequestTask().execute(POSTURL);
-                    }
-                });
-                //creditsUsedPromptText.setText("the user's phone number is: " + phoneNumber.getText().toString() + " and the credits used is: " + creditsUsed.getText().toString());
+                int amount = Integer.parseInt(creditsUsed.getText().toString())*-1;
+                UpdateCreditTaskerInput updateCreditTaskerInput = new UpdateCreditTaskerInput(merchantId,amount,phoneNumber.getText().toString(),creditsUsed.getText().toString());
+                UpdateCreditTasker updateCreditTasker = new UpdateCreditTasker(usingCredits);
+                updateCreditTasker.execute(updateCreditTaskerInput);
             }
         });
         checkBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new RequestTask().execute(CHECK_BALANCE_URL);
-                    }
-                });
+                CheckBalanceTasker checkBalanceTasker = (new CheckBalanceTasker(usingCredits));
+                checkBalanceTasker.execute(new CheckBalanceTaskerInput(phoneNumber.getText().toString()));
             }
         });
     }
@@ -124,114 +113,32 @@ public class UsingCredits extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private class RequestTask extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... uri) {
-            phoneNumber = (EditText) findViewById(R.id.enter_phone_number_id);
-            creditsUsed = (EditText) findViewById(R.id.enter_the_amount_of_credits_used);
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpResponse response;
-            String responseString = null;
-            InputStream inputStream = null;
-            StatusLine statusLine;
-            String responseParams = null;
-            int statusLineInt = 0;
-            int merchantId = 1;
-            //creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
-            Log.d("THEURI", uri[0]);
-            if (uri[0] == POSTURL) {
-                try {
-                    //response = httpclient.execute(new HttpGet(URL)t);
-                    // Add your data
-                    final String phoneNumberText = phoneNumber.getText().toString();
-                    HttpPost merchantPost = new HttpPost(POSTURL);
-                    JSONObject formDetailsJson = new JSONObject();
-                    JSONObject nestedFormDetailsJson = new JSONObject();
-                    nestedFormDetailsJson.put("name", creditsUsed.getText().toString());
-                    nestedFormDetailsJson.put("amount", Integer.toString(Integer.parseInt(creditsUsed.getText().toString())*-1));
-                    nestedFormDetailsJson.put("merchant_id", Integer.toString(merchantId));
-                    nestedFormDetailsJson.put("phone_number", phoneNumber.getText().toString());
-                    formDetailsJson.put("customer", nestedFormDetailsJson);
-                    merchantPost.setHeader("Accept", "application/json");
-                    merchantPost.setHeader("Content-type", "application/json");
-                    StringEntity se = new StringEntity(nestedFormDetailsJson.toString());
-                    merchantPost.setEntity(se);
-                    response = httpclient.execute(merchantPost);
-                    responseString = response.toString();
-                    statusLine = response.getStatusLine();
-                    if (statusLine.getStatusCode() == HttpStatus.SC_CREATED || statusLine.getStatusCode() == HttpStatus.SC_OK) {
-                        inputStream = response.getEntity().getContent();
-                        final String result = convertInputStreamToString(inputStream);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
-                                    JSONObject json = new JSONObject(result);
-                                    creditsUsedPromptText.setText("A customer with the phone number of " + phoneNumberText + " has been registered");
-                                    phoneNumber.setText("");
-                                    creditsUsed.setText("");
-                                } catch (JSONException e) {
-                                    creditsUsedPromptText.setText("JSONException");
-                                }
-                            }
-                        });
-                    } else {
-                        //Closes the connection.
-                        response.getEntity().getContent().close();
-                        throw new IOException(statusLine.getReasonPhrase());
-                    }
-                } catch (JSONException e) {
 
-                } catch (IOException e) {
-                    Log.d("IOEXCEPTION", "an exception was thrown");
-                }
-                return responseString;
-            } else if(uri[0] == CHECK_BALANCE_URL){
-                try {
-                    //response = httpclient.execute(new HttpGet(URL)t);
-                    // Add your data
-                    final String phoneNumberText = phoneNumber.getText().toString();
-                    String getString = CHECK_BALANCE_URL + "?phone_number=" + phoneNumberText;
-                    HttpGet merchantGet = new HttpGet(getString);
-                    //formDetailsJson.put("customer", nestedFormDetailsJson);
-                    merchantGet.setHeader("Accept", "application/json");
-                    merchantGet.setHeader("Content-type", "application/json");
-                    response = httpclient.execute(merchantGet);
-                    responseString = response.toString();
-                    statusLine = response.getStatusLine();
-                    statusLineInt = statusLine.getStatusCode();
-                    if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-                        inputStream = response.getEntity().getContent();
-                        final String result = convertInputStreamToString(inputStream);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
-                                    JSONObject json = new JSONObject(result);
-                                    String balance = json.getString("balance");
-                                    Log.d("JSONSTRING", json.toString());
-                                    creditsUsedPromptText.setText("Successful get request balance is: " + balance);
-                                    phoneNumber.setText("");
-                                    creditsUsed.setText("");
-                                } catch (JSONException e) {
-                                    creditsUsedPromptText.setText("JSONException");
-                                }
-                            }
-                        });
-                    } else {
-                        //Closes the connection.
-                        response.getEntity().getContent().close();
-                        throw new IOException(statusLine.getReasonPhrase());
-                    }
-                }catch (IOException e) {
-                    Log.d("HTTPSTATUSCODE", Integer.toString(statusLineInt));
-                    Log.d("IOEXCEPTION", "an exception was thrown");
-                }
-                return responseString;
-            }
-            return "";
+    // Updates the UI after the CheckBalanceTasker completes
+    public void updateCheckBalance(String responseString){
+        try {
+            creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
+            JSONObject json = new JSONObject(responseString);
+            String balance = json.getString("balance");
+            creditsUsedPromptText.setText("Successful get request balance is: " + balance);
+            phoneNumber.setText("");
+            creditsUsed.setText("");
+        } catch (JSONException e) {
+            creditsUsedPromptText.setText("JSONException");
         }
     }
+    // Updates the UI after the UpdateCreditTasker completes
+    public void updateCustomerCredit(String responseString){
+        try {
+            String phoneNumberText = phoneNumber.getText().toString();
+            creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
+            JSONObject json = new JSONObject(responseString);
+            creditsUsedPromptText.setText("A customer with the phone number of " + phoneNumberText + " has been registered");
+            phoneNumber.setText("");
+            creditsUsed.setText("");
+        } catch (JSONException e) {
+            creditsUsedPromptText.setText("JSONException");
+        }
+    }
+
 }

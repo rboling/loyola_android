@@ -2,6 +2,7 @@ package com.example.robert.loyaltyclub.Taskers;
 
 import android.os.AsyncTask;
 
+import com.example.robert.loyaltyclub.CustomerDataEntry;
 import com.example.robert.loyaltyclub.Metadata.AppMetadata;
 import com.example.robert.loyaltyclub.TaskerHelpers.WriteContentHelper;
 import com.example.robert.loyaltyclub.TaskerInputs.UpdateCreditTaskerInput;
@@ -22,9 +23,14 @@ public class UpdateCreditTasker extends AsyncTask<UpdateCreditTaskerInput,Intege
     private HttpPost httpPost;
     private HttpClient httpClient;
     private UsingCredits usingCredits;
+    private CustomerDataEntry customerDataEntry;
 
     public UpdateCreditTasker(UsingCredits usingCredits){
         this.usingCredits = usingCredits;
+    }
+
+    public UpdateCreditTasker(CustomerDataEntry customerDataEntry){
+        this.customerDataEntry = customerDataEntry;
     }
 
     public String doInBackground(UpdateCreditTaskerInput...params){
@@ -50,6 +56,11 @@ public class UpdateCreditTasker extends AsyncTask<UpdateCreditTaskerInput,Intege
         }
     }
     public void onPostExecute(String resultString){
-        usingCredits.updateCustomerCredit(resultString);
+        if (usingCredits != null) {
+            usingCredits.updateCustomerCredit(resultString);
+        }
+        else{
+            customerDataEntry.updateCustomerDataEntryUi(resultString);
+        }
     }
 }

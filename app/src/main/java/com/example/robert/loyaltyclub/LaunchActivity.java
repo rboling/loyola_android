@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+
 
 public class LaunchActivity extends Activity {
 
@@ -15,8 +17,8 @@ public class LaunchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-        Button enterCreditsUsed = (Button) findViewById(R.id.enter_credits_used_id);
-        Button enterCreditsBought = (Button) findViewById(R.id.enter_credits_bought_id);
+        BootstrapButton enterCreditsUsed = (BootstrapButton) findViewById(R.id.enter_credits_used_id);
+        BootstrapButton enterCreditsBought = (BootstrapButton) findViewById(R.id.enter_credits_bought_id);
         final Intent launchCustomerDataEntry = new Intent(this, CustomerDataEntry.class);
         final Intent launchUsingCredits = new Intent(this, UsingCredits.class);
         enterCreditsUsed.setOnClickListener(new View.OnClickListener() {

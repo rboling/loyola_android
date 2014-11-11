@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.robert.loyaltyclub.TaskerInputs.CheckBalanceTaskerInput;
 import com.example.robert.loyaltyclub.TaskerInputs.UpdateCreditTaskerInput;
 import com.example.robert.loyaltyclub.Taskers.CheckBalanceTasker;
@@ -48,21 +50,22 @@ public class UsingCredits extends Activity {
     public final String CHECK_BALANCE_URL = "http://stark-peak-1987.herokuapp.com/check_balance.json";
     public String responseString = null;
     InputStream inputStream = null;
-    EditText phoneNumber;
-    EditText creditsUsed;
+    BootstrapEditText phoneNumber;
+    BootstrapEditText creditsUsed;
     TextView creditsUsedPromptText;
-    Button checkBalance;
+    BootstrapButton checkBalance;
+    BootstrapButton usingCreditsButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final int merchantId = 1;
         final UsingCredits usingCredits = this;
         setContentView(R.layout.activity_using_credits);
-        phoneNumber = (EditText) findViewById(R.id.enter_phone_number_id);
-        creditsUsed = (EditText) findViewById(R.id.enter_the_amount_of_credits_used);
+        phoneNumber = (BootstrapEditText) findViewById(R.id.enter_phone_number_id);
+        creditsUsed = (BootstrapEditText) findViewById(R.id.enter_the_amount_of_credits_used);
         creditsUsedPromptText = (TextView) findViewById(R.id.using_credits_prompt);
-        checkBalance = (Button)findViewById(R.id.check_balance_button);
-        Button usingCreditsButton = (Button)findViewById(R.id.using_credits_button);
+        checkBalance = (BootstrapButton)findViewById(R.id.check_balance_button);
+        usingCreditsButton = (BootstrapButton)findViewById(R.id.using_credits_button);
         usingCreditsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){

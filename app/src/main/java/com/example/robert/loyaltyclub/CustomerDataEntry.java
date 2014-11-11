@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.robert.loyaltyclub.TaskerInputs.UpdateCreditTaskerInput;
 import com.example.robert.loyaltyclub.Taskers.UpdateCreditTasker;
 
@@ -33,17 +35,18 @@ import java.io.InputStreamReader;
 
 public class CustomerDataEntry extends Activity {
     public final String POSTURL = "http://stark-peak-1987.herokuapp.com/create_or_update_customer_credit";
-    EditText amountOfCreditsPurchasedByUser, userPhoneNumber;
+    BootstrapEditText amountOfCreditsPurchasedByUser, userPhoneNumber;
     TextView promptUserToEnterCredits;
+    BootstrapButton submitUserCredits;
     private final CustomerDataEntry customerDataEntry = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_data_entry);
-        Button submitUserCredits = (Button)this.findViewById(R.id.button_to_submit_credits_purchased);
+        submitUserCredits = (BootstrapButton)this.findViewById(R.id.button_to_submit_credits_purchased);
         promptUserToEnterCredits = (TextView) findViewById(R.id.prompt_to_enter_credits_purchased_id);
-        amountOfCreditsPurchasedByUser = (EditText) findViewById(R.id.amount_of_credits_purchased_by_user_id);
-        userPhoneNumber = (EditText) findViewById(R.id.credits_purchased_phone_number);
+        amountOfCreditsPurchasedByUser = (BootstrapEditText) findViewById(R.id.amount_of_credits_purchased_by_user_id);
+        userPhoneNumber = (BootstrapEditText) findViewById(R.id.credits_purchased_phone_number);
         submitUserCredits.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v){
                 String name = "";

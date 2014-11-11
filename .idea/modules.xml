@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidBootstrap/AndroidBootstrap.iml" filepath="$PROJECT_DIR$/AndroidBootstrap/AndroidBootstrap.iml" />
       <module fileurl="file://$PROJECT_DIR$/LoyaltyClub.iml" filepath="$PROJECT_DIR$/LoyaltyClub.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/loyola_android.iml" filepath="$PROJECT_DIR$/loyola_android.iml" />
